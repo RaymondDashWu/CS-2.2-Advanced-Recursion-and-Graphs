@@ -43,7 +43,10 @@ class Vertex(object):
         """return the weight of this edge"""
         # return the weight of the edge from this
         # vertex to the given vertex.
-        return self.neighbors.values()
+        if vertex in self.neighbors:
+            return self.neighbors.values()
+        else:
+            raise ValueError("{} not found".format(vertex))
 
 
 """ Graph Class
@@ -63,15 +66,27 @@ class Graph:
         """add a new vertex object to the graph with
         the given key and return the vertex
         """
-        # TODO increment the number of vertices
-
-        # TODO create a new vertex
-        # TODO add the new vertex to the vertex list
-        # TODO return the new vertex
+        
+        # create a new vertex
+        new_vertex = Vertex(key)        
+        # add the new vertex to the vertex list
+        self.vertList[key] = new_vertex
+        # increment the number of vertices
+        self.numVertices += 1
+        # return the new vertex
+        return new_vertex
 
     def getVertex(self, key):
         """return the vertex if it exists"""
         # TODO return the vertex if it is in the graph
+        if key in self.vertList:
+            return self.vertList[key] 
+        else:
+            raise ValueError("{} vertex does not exist".format(key))
+        
+        # WHY YOU NO WORK!!??
+        # return self.vertList[key] if key in self.vertList else raise ValueError("{} vertex does not exist".format(key))
+
 
     def addEdge(self, f, t, cost=0):
         """add an edge from vertex f to vertex t with a cost

@@ -52,6 +52,10 @@ class VertexTest(unittest.TestCase):
         vertex.addNeighbor("Maggie", weight = 8)
         vertex.addNeighbor("Duckie", weight = 2)
 
+        # TODO: This doesn't work ¯\_(ツ)_/¯
+        # Should raise ValueError telling us "Rainbow Unicorn" is not a neighbor
+        # self.assertRaises(ValueError, vertex.getEdgeWeight("Rainbow Unicorn"))        
+
         # Should tell us Sugar has 4 neighbors
         assert len(vertex.neighbors) == 4
         # Should tell us Sugar's neighbors have a weight of 0, 4, 8, or 2
@@ -63,12 +67,19 @@ class VertexTest(unittest.TestCase):
 class GraphTest(unittest.TestCase):
     
     def test_init(self):
-        pass
+        graph = Graph()
+        assert any(graph.vertList) == False
+        assert graph.numVertices == 0
 
     def test_addVertex(self):
-        pass
+        graph = Graph()
+        graph.addVertex("Sugar")
+        assert graph.numVertices == 1
+        assert "Sugar" in graph.vertList.keys()
 
     def test_getVertex(self):
+        graph = Graph()
+        graph.addVertex("Sugar")
         pass
 
     def test_addEdge(self):

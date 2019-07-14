@@ -43,10 +43,14 @@ class Vertex(object):
         """return the weight of this edge"""
         # return the weight of the edge from this
         # vertex to the given vertex.
-        if vertex in self.neighbors:
-            return self.neighbors.values()
-        else:
-            raise ValueError("{} not found".format(vertex))
+        
+        return self.neighbors.values()
+
+        # TODO: Fix this + ValueError test
+        # if vertex in self.neighbors:
+        #     return self.neighbors.values()
+        # else:
+        #     raise ValueError("{} not found".format(vertex))
 
 
 """ Graph Class
@@ -86,20 +90,29 @@ class Graph:
             return self.vertList[key] 
         else:
             raise ValueError("{} vertex does not exist".format(key))
-        
-        # WHY YOU NO WORK!!??
-        # return self.vertList[key] if key in self.vertList else raise ValueError("{} vertex does not exist".format(key))
-
 
     def addEdge(self, f, t, cost=0):
         """add an edge from vertex f to vertex t with a cost
         """
         # TODO if either vertex is not in the graph,
         # add it - or return an error (choice is up to you).
+        if f not in self.vertList:
+            raise ValueError("{} vertex does not exist".format(f))
+        elif t not in self.vertList:
+            raise ValueError("{} vertex does not exist".format(t))
+
+        # Edge case where vertex f & t are the same
+        elif f == t:
+            raise ValueError("Both vertexes can not have the same name")
+
         # TODO if both vertices in the graph, add the
         # edge by making t a neighbor of f
         # and using the addNeighbor method of the Vertex class.
         # Hint: the vertex f is stored in self.vertList[f].
+        else:
+            # Adds edge to both vertList dictionary entries f & t
+            self.vertList[f].addNeighbor(t, cost)
+            self.vertList[t].addNeighbor(f, cost)
 
     def getVertices(self):
         """return all the vertices in the graph"""

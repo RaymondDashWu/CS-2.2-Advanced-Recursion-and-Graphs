@@ -86,13 +86,18 @@ class GraphTest(unittest.TestCase):
         # Should be 5 as duplicate vertex names aren't allowed
         graph.addVertex("Sugar")
         assert graph.numVertices == 5
+        # Double checking that vertList has the same count as numVertices
+        assert len(graph.vertList) == 5
 
 
 
     def test_getVertex(self):
         graph = Graph()
         graph.addVertex("Sugar")
-        pass
+        
+        assert graph.getVertex("Sugar")
+        # TODO: Does not work
+        # assert self.assertRaises(ValueError, graph.getVertex("Rainbow Unicorn"))        
 
     def test_addEdge(self):
         pass

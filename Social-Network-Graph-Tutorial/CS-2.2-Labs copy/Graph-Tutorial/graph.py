@@ -66,7 +66,10 @@ class Graph:
         """add a new vertex object to the graph with
         the given key and return the vertex
         """
-        
+        # duplicate checking
+        if key in self.vertList:
+            return
+
         # create a new vertex
         new_vertex = Vertex(key)        
         # add the new vertex to the vertex list

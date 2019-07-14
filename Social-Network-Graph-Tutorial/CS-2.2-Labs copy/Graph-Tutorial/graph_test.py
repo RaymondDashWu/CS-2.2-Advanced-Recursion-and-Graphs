@@ -77,6 +77,18 @@ class GraphTest(unittest.TestCase):
         assert graph.numVertices == 1
         assert "Sugar" in graph.vertList.keys()
 
+        graph.addVertex("Kevin")
+        graph.addVertex("Chewie")
+        graph.addVertex("Maggie")
+        graph.addVertex("Duckie")
+        assert graph.numVertices == 5
+
+        # Should be 5 as duplicate vertex names aren't allowed
+        graph.addVertex("Sugar")
+        assert graph.numVertices == 5
+
+
+
     def test_getVertex(self):
         graph = Graph()
         graph.addVertex("Sugar")

@@ -19,10 +19,10 @@ class Vertex(object):
 
     def addNeighbor(self, vertex, weight=0):
         """add a neighbor along a weighted edge"""
-        # TODO check if vertex is already a neighbor
+        # check if vertex is already a neighbor
         if vertex in self.neighbors:
             pass
-        # TODO if not, add vertex to neighbors and assign weight.
+        # if not, add vertex to neighbors and assign weight.
         else:
             self.neighbors[vertex] = weight
 
@@ -32,9 +32,8 @@ class Vertex(object):
 
     def getNeighbors(self):
         """return the neighbors of this vertex"""
-        # TODO return the neighbors
-        for neighbor in self.id:
-            return neighbor.neighbors
+        # return the neighbors
+        return self.neighbors.keys()
 
     def getId(self):
         """return the id of this vertex"""
@@ -43,7 +42,8 @@ class Vertex(object):
     def getEdgeWeight(self, vertex):
         """return the weight of this edge"""
         # TODO return the weight of the edge from this
-        # vertext to the given vertex.
+        # vertex to the given vertex.
+        return self.neighbors.values()
 
 
 """ Graph Class

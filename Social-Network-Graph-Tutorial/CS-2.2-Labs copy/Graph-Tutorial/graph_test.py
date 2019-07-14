@@ -33,13 +33,29 @@ class VertexTest(unittest.TestCase):
 
         # Should tell us Sugar has 4 neighbors
         assert len(vertex.neighbors) == 4
+        # Should tell us Sugar's neighbors are Kevin, Chewie, Maggie, Duckie
+        assert vertex.getNeighbors() == {"Kevin", "Chewie", "Maggie", "Duckie"}
 
 
     def test_getId(self):
-        pass
+        label = "Sugar"
+        vertex = Vertex(label)
+        # Should tell us that this vertex is called Sugar
+        assert vertex.id == "Sugar"
 
     def test_getEdgeWeight(self):
-        pass
+        label = "Sugar"
+        vertex = Vertex(label)
+
+        vertex.addNeighbor("Kevin", weight = 0)
+        vertex.addNeighbor("Chewie", weight = 4)
+        vertex.addNeighbor("Maggie", weight = 8)
+        vertex.addNeighbor("Duckie", weight = 2)
+
+        # Should tell us Sugar has 4 neighbors
+        assert len(vertex.neighbors) == 4
+        # Should tell us Sugar's neighbors are Kevin, Chewie, Maggie, Duckie
+        assert vertex.getEdgeWeight(label) == {0, 4, 8, 2}
 
 class GraphTest(unittest.TestCase):
     

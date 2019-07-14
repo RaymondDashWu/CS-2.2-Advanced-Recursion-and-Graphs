@@ -21,7 +21,7 @@ class Vertex(object):
         """add a neighbor along a weighted edge"""
         # TODO check if vertex is already a neighbor
         if vertex in self.neighbors:
-            return False
+            pass
         # TODO if not, add vertex to neighbors and assign weight.
         else:
             self.neighbors[vertex] = weight

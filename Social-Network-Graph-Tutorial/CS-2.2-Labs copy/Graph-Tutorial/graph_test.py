@@ -16,10 +16,24 @@ class VertexTest(unittest.TestCase):
         vertex = Vertex(label)
 
         vertex.addNeighbor("Kevin", weight = 0)
-        # Should tell us that Sugar's neighbor is Kevin
-        assert vertex.neighbors == {"Kevin": 0}
+
         # Should tell us that Sugar has a neighbor
         assert any(vertex.neighbors) is True
+        # Should tell us that Sugar's neighbor is Kevin
+        assert vertex.neighbors == {"Kevin": 0}
+
+    def test_getNeighbors(self):
+        label = "Sugar"
+        vertex = Vertex(label)
+
+        vertex.addNeighbor("Kevin", weight = 0)
+        vertex.addNeighbor("Chewie", weight = 4)
+        vertex.addNeighbor("Maggie", weight = 8)
+        vertex.addNeighbor("Duckie", weight = 2)
+
+        # Should tell us Sugar has 4 neighbors
+        assert len(vertex.neighbors) == 4
+
 
     def test_getId(self):
         pass

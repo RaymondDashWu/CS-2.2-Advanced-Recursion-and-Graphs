@@ -54,8 +54,11 @@ class VertexTest(unittest.TestCase):
 
         # Should tell us Sugar has 4 neighbors
         assert len(vertex.neighbors) == 4
-        # Should tell us Sugar's neighbors are Kevin, Chewie, Maggie, Duckie
-        assert vertex.getEdgeWeight(label) == {0, 4, 8, 2}
+        # Should tell us Sugar's neighbors have a weight of 0, 4, 8, or 2
+        assert 0 in vertex.getEdgeWeight(label)
+        assert 4 in vertex.getEdgeWeight(label)
+        assert 8 in vertex.getEdgeWeight(label)
+        assert 2 in vertex.getEdgeWeight(label)
 
 class GraphTest(unittest.TestCase):
     

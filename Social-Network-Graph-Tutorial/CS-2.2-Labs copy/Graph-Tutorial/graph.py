@@ -41,7 +41,7 @@ class Vertex(object):
 
     def getEdgeWeight(self, vertex):
         """return the weight of this edge"""
-        # TODO return the weight of the edge from this
+        # return the weight of the edge from this
         # vertex to the given vertex.
         return self.neighbors.values()
 

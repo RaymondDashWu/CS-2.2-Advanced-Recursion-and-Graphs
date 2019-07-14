@@ -8,3 +8,6 @@
 # The # vertices in the graph.
 # The # edges in the graph.
 # A list of the edges with their weights (if weighted)
+
+class Graph:
+    def __init__(self, ):

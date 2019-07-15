@@ -96,7 +96,7 @@ class Graph:
         """add an edge from vertex f to vertex t with a cost
         """
 
-        # TODO if either vertex is not in the graph,
+        # if either vertex is not in the graph,
         # add it - or return an error (choice is up to you).
         if f not in self.vertList:
             raise ValueError("{} vertex does not exist".format(f))
@@ -107,7 +107,7 @@ class Graph:
         elif f == t:
             raise ValueError("Both vertexes can not have the same name")
 
-        # TODO if both vertices in the graph, add the
+        # if both vertices in the graph, add the
         # edge by making t a neighbor of f
         # and using the addNeighbor method of the Vertex class.
         # Hint: the vertex f is stored in self.vertList[f].
@@ -123,7 +123,16 @@ class Graph:
     def getEdges(self):
         """return all the edges in the graph"""
         # TODO
-        pass
+        edge_dict = {}
+
+        # Night cap. I can't envision what the output looks like for my edge dict
+        # My guess is it should look something like this {edge1 : {edge2: weight1
+        #                                                          edge3: weight2            
+        #                                                         }}
+        for vertex in self.vertList:
+            for neighbor in vertex.getNeighbors():
+                edge_dict.update({vertex.id: neighbor})
+
 
     def __iter__(self):
         """iterate over the vertex objects in the

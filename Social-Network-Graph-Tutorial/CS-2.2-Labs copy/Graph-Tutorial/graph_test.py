@@ -59,10 +59,10 @@ class VertexTest(unittest.TestCase):
         # Should tell us Sugar has 4 neighbors
         assert len(vertex.neighbors) == 4
         # Should tell us Sugar's neighbors have a weight of 0, 4, 8, or 2
-        assert 0 in vertex.getEdgeWeight(label)
-        assert 4 in vertex.getEdgeWeight(label)
-        assert 8 in vertex.getEdgeWeight(label)
-        assert 2 in vertex.getEdgeWeight(label)
+        assert vertex.getEdgeWeight("Kevin") == 0
+        assert vertex.getEdgeWeight("Chewie") == 4
+        assert vertex.getEdgeWeight("Maggie") == 8
+        assert vertex.getEdgeWeight("Duckie") == 2
 
 class GraphTest(unittest.TestCase):
     
@@ -100,8 +100,27 @@ class GraphTest(unittest.TestCase):
         # assert self.assertRaises(ValueError, graph.getVertex("Rainbow Unicorn"))        
 
     def test_addEdge(self):
-        # TODO
-        pass
+        graph = Graph()
+        graph.addVertex("Sugar")
+        graph.addVertex("Kevin")
+
+        graph.addEdge("Sugar", "Kevin", cost = 4)
+
+        vertex_sugar = graph.getVertex("Sugar")
+        vertex_kevin = graph.getVertex("Kevin")
+
+        # Kevin and Sugar should be neighbors to one another
+        assert "Kevin" in vertex_sugar.neighbors
+        assert "Sugar" in vertex_kevin.neighbors
+
+        # Kevin and Sugar should not be neighbors to themselves
+        assert "Kevin" not in vertex_kevin.neighbors
+        assert "Sugar" not in vertex_sugar.neighbors
+
+        # Checking edge weights
+        assert vertex_sugar.getEdgeWeight("Kevin") == 4
+        assert vertex_kevin.getEdgeWeight("Sugar") == 4
+
 
     def test_getVertices(self):
         graph = Graph()
@@ -116,6 +135,8 @@ class GraphTest(unittest.TestCase):
         assert "Chewie" in graph.getVertices()
         assert "Maggie" in graph.getVertices()
         assert "Duckie" in graph.getVertices()
+
+        assert "Rainbow Unicorn" not in graph.getVertices()
 
     def test_getEdges(self):
         # TODO

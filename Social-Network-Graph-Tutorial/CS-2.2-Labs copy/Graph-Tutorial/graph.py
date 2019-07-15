@@ -44,7 +44,8 @@ class Vertex(object):
         # return the weight of the edge from this
         # vertex to the given vertex.
         
-        return self.neighbors.values()
+        return self.neighbors[vertex]
+        # return self.neighbors.values()
 
         # TODO: Fix this + ValueError test
         # if vertex in self.neighbors:
@@ -94,6 +95,7 @@ class Graph:
     def addEdge(self, f, t, cost=0):
         """add an edge from vertex f to vertex t with a cost
         """
+
         # TODO if either vertex is not in the graph,
         # add it - or return an error (choice is up to you).
         if f not in self.vertList:

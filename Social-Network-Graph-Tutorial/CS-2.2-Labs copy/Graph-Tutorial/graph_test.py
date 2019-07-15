@@ -100,7 +100,23 @@ class GraphTest(unittest.TestCase):
         # assert self.assertRaises(ValueError, graph.getVertex("Rainbow Unicorn"))        
 
     def test_addEdge(self):
+        # TODO
         pass
 
     def test_getVertices(self):
+        graph = Graph()
+        graph.addVertex("Sugar")
+        graph.addVertex("Kevin")
+        graph.addVertex("Chewie")
+        graph.addVertex("Maggie")
+        graph.addVertex("Duckie")
+
+        assert "Sugar" in graph.getVertices()
+        assert "Kevin" in graph.getVertices()
+        assert "Chewie" in graph.getVertices()
+        assert "Maggie" in graph.getVertices()
+        assert "Duckie" in graph.getVertices()
+
+    def test_getEdges(self):
+        # TODO
         pass

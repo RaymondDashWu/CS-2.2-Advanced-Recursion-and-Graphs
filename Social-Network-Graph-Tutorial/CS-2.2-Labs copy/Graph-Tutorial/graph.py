@@ -85,7 +85,7 @@ class Graph:
 
     def getVertex(self, key):
         """return the vertex if it exists"""
-        # TODO return the vertex if it is in the graph
+        # return the vertex if it is in the graph
         if key in self.vertList:
             return self.vertList[key] 
         else:
@@ -117,6 +117,11 @@ class Graph:
     def getVertices(self):
         """return all the vertices in the graph"""
         return self.vertList.keys()
+
+    def getEdges(self):
+        """return all the edges in the graph"""
+        # TODO
+        pass
 
     def __iter__(self):
         """iterate over the vertex objects in the

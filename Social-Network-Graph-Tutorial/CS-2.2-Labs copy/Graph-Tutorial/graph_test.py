@@ -11,30 +11,30 @@ class VertexTest(unittest.TestCase):
         # Should tell us that Sugar has no neighbors ;(
         assert any(vertex.neighbors) is False
 
-    def test_addNeighbor(self):
+    def test_add_neighbor(self):
         label = "Sugar"
         vertex = Vertex(label)
 
-        vertex.addNeighbor("Kevin", weight = 0)
+        vertex.add_neighbor("Kevin", weight = 0)
 
         # Should tell us that Sugar has a neighbor
         assert any(vertex.neighbors) is True
         # Should tell us that Sugar's neighbor is Kevin
         assert vertex.neighbors == {"Kevin": 0}
 
-    def test_getNeighbors(self):
+    def test_get_neighbors(self):
         label = "Sugar"
         vertex = Vertex(label)
 
-        vertex.addNeighbor("Kevin", weight = 0)
-        vertex.addNeighbor("Chewie", weight = 4)
-        vertex.addNeighbor("Maggie", weight = 8)
-        vertex.addNeighbor("Duckie", weight = 2)
+        vertex.add_neighbor("Kevin", weight = 0)
+        vertex.add_neighbor("Chewie", weight = 4)
+        vertex.add_neighbor("Maggie", weight = 8)
+        vertex.add_neighbor("Duckie", weight = 2)
 
         # Should tell us Sugar has 4 neighbors
         assert len(vertex.neighbors) == 4
         # Should tell us Sugar's neighbors are Kevin, Chewie, Maggie, Duckie
-        assert vertex.getNeighbors() == {"Kevin", "Chewie", "Maggie", "Duckie"}
+        assert vertex.get_neighbors() == {"Kevin", "Chewie", "Maggie", "Duckie"}
 
 
     def test_getId(self):
@@ -43,26 +43,26 @@ class VertexTest(unittest.TestCase):
         # Should tell us that this vertex is called Sugar
         assert vertex.id == "Sugar"
 
-    def test_getEdgeWeight(self):
+    def test_get_edge_weight(self):
         label = "Sugar"
         vertex = Vertex(label)
 
-        vertex.addNeighbor("Kevin", weight = 0)
-        vertex.addNeighbor("Chewie", weight = 4)
-        vertex.addNeighbor("Maggie", weight = 8)
-        vertex.addNeighbor("Duckie", weight = 2)
+        vertex.add_neighbor("Kevin", weight = 0)
+        vertex.add_neighbor("Chewie", weight = 4)
+        vertex.add_neighbor("Maggie", weight = 8)
+        vertex.add_neighbor("Duckie", weight = 2)
 
         # TODO: This doesn't work ¯\_(ツ)_/¯
         # Should raise ValueError telling us "Rainbow Unicorn" is not a neighbor
-        # self.assertRaises(ValueError, vertex.getEdgeWeight("Rainbow Unicorn"))        
+        # self.assertRaises(KeyError, vertex.get_edge_weight("Rainbow Unicorn"))        
 
         # Should tell us Sugar has 4 neighbors
         assert len(vertex.neighbors) == 4
         # Should tell us Sugar's neighbors have a weight of 0, 4, 8, or 2
-        assert vertex.getEdgeWeight("Kevin") == 0
-        assert vertex.getEdgeWeight("Chewie") == 4
-        assert vertex.getEdgeWeight("Maggie") == 8
-        assert vertex.getEdgeWeight("Duckie") == 2
+        assert vertex.get_edge_weight("Kevin") == 0
+        assert vertex.get_edge_weight("Chewie") == 4
+        assert vertex.get_edge_weight("Maggie") == 8
+        assert vertex.get_edge_weight("Duckie") == 2
 
 class GraphTest(unittest.TestCase):
     
@@ -71,43 +71,42 @@ class GraphTest(unittest.TestCase):
         assert any(graph.vertList) == False
         assert graph.numVertices == 0
 
-    def test_addVertex(self):
+    def test_add_vertex(self):
         graph = Graph()
-        graph.addVertex("Sugar")
+        graph.add_vertex("Sugar")
         assert graph.numVertices == 1
         assert "Sugar" in graph.vertList.keys()
 
-        graph.addVertex("Kevin")
-        graph.addVertex("Chewie")
-        graph.addVertex("Maggie")
-        graph.addVertex("Duckie")
+        graph.add_vertex("Kevin")
+        graph.add_vertex("Chewie")
+        graph.add_vertex("Maggie")
+        graph.add_vertex("Duckie")
         assert graph.numVertices == 5
 
         # Should be 5 as duplicate vertex names aren't allowed
-        graph.addVertex("Sugar")
+        graph.add_vertex("Sugar")
         assert graph.numVertices == 5
         # Double checking that vertList has the same count as numVertices
         assert len(graph.vertList) == 5
 
 
 
-    def test_getVertex(self):
+    def test_get_vertex(self):
         graph = Graph()
-        graph.addVertex("Sugar")
+        graph.add_vertex("Sugar")
         
-        assert graph.getVertex("Sugar")
-        # TODO: Does not work
-        # assert self.assertRaises(ValueError, graph.getVertex("Rainbow Unicorn"))        
+        assert graph.get_vertex("Sugar")
+        self.assertRaises(ValueError, graph.get_vertex, "Rainbow Unicorn")        
 
-    def test_addEdge(self):
+    def test_add_edge(self):
         graph = Graph()
-        graph.addVertex("Sugar")
-        graph.addVertex("Kevin")
+        graph.add_vertex("Sugar")
+        graph.add_vertex("Kevin")
 
-        graph.addEdge("Sugar", "Kevin", cost = 4)
+        graph.add_edge("Sugar", "Kevin", weight = 4)
 
-        vertex_sugar = graph.getVertex("Sugar")
-        vertex_kevin = graph.getVertex("Kevin")
+        vertex_sugar = graph.get_vertex("Sugar")
+        vertex_kevin = graph.get_vertex("Kevin")
 
         # Kevin and Sugar should be neighbors to one another
         assert "Kevin" in vertex_sugar.neighbors
@@ -118,26 +117,26 @@ class GraphTest(unittest.TestCase):
         assert "Sugar" not in vertex_sugar.neighbors
 
         # Checking edge weights
-        assert vertex_sugar.getEdgeWeight("Kevin") == 4
-        assert vertex_kevin.getEdgeWeight("Sugar") == 4
+        assert vertex_sugar.get_edge_weight("Kevin") == 4
+        assert vertex_kevin.get_edge_weight("Sugar") == 4
 
 
-    def test_getVertices(self):
+    def test_get_vertices(self):
         graph = Graph()
-        graph.addVertex("Sugar")
-        graph.addVertex("Kevin")
-        graph.addVertex("Chewie")
-        graph.addVertex("Maggie")
-        graph.addVertex("Duckie")
+        graph.add_vertex("Sugar")
+        graph.add_vertex("Kevin")
+        graph.add_vertex("Chewie")
+        graph.add_vertex("Maggie")
+        graph.add_vertex("Duckie")
 
-        assert "Sugar" in graph.getVertices()
-        assert "Kevin" in graph.getVertices()
-        assert "Chewie" in graph.getVertices()
-        assert "Maggie" in graph.getVertices()
-        assert "Duckie" in graph.getVertices()
+        assert "Sugar" in graph.get_vertices()
+        assert "Kevin" in graph.get_vertices()
+        assert "Chewie" in graph.get_vertices()
+        assert "Maggie" in graph.get_vertices()
+        assert "Duckie" in graph.get_vertices()
 
-        assert "Rainbow Unicorn" not in graph.getVertices()
+        assert "Rainbow Unicorn" not in graph.get_vertices()
 
-    def test_getEdges(self):
+    def test_get_edges(self):
         # TODO
         pass

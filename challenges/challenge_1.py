@@ -4,6 +4,7 @@
 A helper class for the Graph class that defines vertices and vertex neighbors.
 """
 
+import sys
 
 class Vertex(object):
 
@@ -149,18 +150,29 @@ if __name__ == "__main__":
     g = Graph()
 
     # Create vertices from line 2 of the file
-    for vertex in graph_file[1].strip(r'\n').split(','):
+    for vertex in graph_file[1].rstrip().split(','):
+        print("vertex:", vertex)
         g.add_vertex(vertex)
     
     # Create edges
     for edges in graph_file[2:]:
         # Cleans data of extra \n and parentheses
-        stripped = edges[1:-1].strip(r')\n').split(',')
-        if len(stripped) == 2:
-            g.add_edge(stripped[0], stripped[1])
+        stripped = edges.rstrip()[1:-1].split(',')
+        print("stripped:", stripped)
         if len(stripped) == 3:
             g.add_edge(stripped[0], stripped[1], stripped[2])
+        if len(stripped) == 2:
+            g.add_edge(stripped[0], stripped[1])
 
+    print("# Vertices:", len(g.vert_list))
+    print("# Edges:", "TODO")
+    print("Edge List:")
+
+    for vertex in g:
+        print("vertex", vertex)
+        print("g", g)
+        for w in vertex.get_neighbors():
+            print("({},{},{})".format(vertex.get_id(), w.get_id(), vertex.get_edge_weight(w)))
 
 
 

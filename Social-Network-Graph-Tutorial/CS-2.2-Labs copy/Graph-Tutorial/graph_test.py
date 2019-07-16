@@ -29,12 +29,12 @@ class VertexTest(unittest.TestCase):
         vertex.add_neighbor("Kevin", weight = 0)
         vertex.add_neighbor("Chewie", weight = 4)
         vertex.add_neighbor("Maggie", weight = 8)
-        vertex.add_neighbor("Duckie", weight = 2)
+        vertex.add_neighbor("Ducky", weight = 2)
 
         # Should tell us Sugar has 4 neighbors
         assert len(vertex.neighbors) == 4
-        # Should tell us Sugar's neighbors are Kevin, Chewie, Maggie, Duckie
-        assert vertex.get_neighbors() == {"Kevin", "Chewie", "Maggie", "Duckie"}
+        # Should tell us Sugar's neighbors are Kevin, Chewie, Maggie, Ducky
+        assert vertex.get_neighbors() == {"Kevin", "Chewie", "Maggie", "Ducky"}
 
 
     def test_getId(self):
@@ -50,7 +50,7 @@ class VertexTest(unittest.TestCase):
         vertex.add_neighbor("Kevin", weight = 0)
         vertex.add_neighbor("Chewie", weight = 4)
         vertex.add_neighbor("Maggie", weight = 8)
-        vertex.add_neighbor("Duckie", weight = 2)
+        vertex.add_neighbor("Ducky", weight = 2)
 
         # Should raise ValueError telling us "Rainbow Unicorn" is not a neighbor
         self.assertRaises(ValueError, vertex.get_edge_weight, "Rainbow Unicorn")        
@@ -61,32 +61,32 @@ class VertexTest(unittest.TestCase):
         assert vertex.get_edge_weight("Kevin") == 0
         assert vertex.get_edge_weight("Chewie") == 4
         assert vertex.get_edge_weight("Maggie") == 8
-        assert vertex.get_edge_weight("Duckie") == 2
+        assert vertex.get_edge_weight("Ducky") == 2
 
 class GraphTest(unittest.TestCase):
     
     def test_init(self):
         graph = Graph()
-        assert any(graph.vertList) == False
-        assert graph.numVertices == 0
+        assert any(graph.vert_list) == False
+        assert graph.num_vertices == 0
 
     def test_add_vertex(self):
         graph = Graph()
         graph.add_vertex("Sugar")
-        assert graph.numVertices == 1
-        assert "Sugar" in graph.vertList.keys()
+        assert graph.num_vertices == 1
+        assert "Sugar" in graph.vert_list.keys()
 
         graph.add_vertex("Kevin")
         graph.add_vertex("Chewie")
         graph.add_vertex("Maggie")
-        graph.add_vertex("Duckie")
-        assert graph.numVertices == 5
+        graph.add_vertex("Ducky")
+        assert graph.num_vertices == 5
 
         # Should be 5 as duplicate vertex names aren't allowed
         graph.add_vertex("Sugar")
-        assert graph.numVertices == 5
-        # Double checking that vertList has the same count as numVertices
-        assert len(graph.vertList) == 5
+        assert graph.num_vertices == 5
+        # Double checking that vert_list has the same count as num_vertices
+        assert len(graph.vert_list) == 5
 
 
 
@@ -132,16 +132,45 @@ class GraphTest(unittest.TestCase):
         graph.add_vertex("Kevin")
         graph.add_vertex("Chewie")
         graph.add_vertex("Maggie")
-        graph.add_vertex("Duckie")
+        graph.add_vertex("Ducky")
 
         assert "Sugar" in graph.get_vertices()
         assert "Kevin" in graph.get_vertices()
         assert "Chewie" in graph.get_vertices()
         assert "Maggie" in graph.get_vertices()
-        assert "Duckie" in graph.get_vertices()
+        assert "Ducky" in graph.get_vertices()
 
         assert "Rainbow Unicorn" not in graph.get_vertices()
 
     def test_get_edges(self):
         # TODO
-        pass
+        graph = Graph()
+        graph.add_vertex("Sugar")
+        graph.add_vertex("Kevin")
+        graph.add_vertex("Chewie")
+        graph.add_vertex("Maggie")
+        graph.add_vertex("Ducky")
+
+        # Sugar knows everyone
+        graph.add_edge("Sugar", "Kevin", weight = 4)
+        graph.add_edge("Sugar", "Chewie", weight = 9)
+        graph.add_edge("Sugar", "Maggie", weight = 12)
+        graph.add_edge("Sugar", "Ducky", weight = 1)
+
+        # Kevin only knows Sugar
+        graph.add_edge("Kevin", "Sugar", weight = 4)
+
+        # Chewie knows Sugar and Maggie
+        graph.add_edge("Chewie", "Sugar", weight = 9)
+        graph.add_edge("Chewie", "Maggie", weight = 8)
+
+        # Maggie knows Sugar, Chewie, and Ducky
+        graph.add_edge("Maggie", "Sugar", weight = 12)
+        graph.add_edge("Maggie", "Chewie", weight = 8)
+        graph.add_edge("Maggie", "Ducky", weight = 15)
+
+        # Ducky knows Sugar and Maggie
+        graph.add_edge("Ducky", "Sugar", weight = 1)
+        graph.add_edge("Ducky", "Maggie", weight = 15)
+
+        assert ("Sugar", "Kevin", 4) in graph.get_edges()

@@ -59,29 +59,29 @@ facts and functionalities of graphs.
 class Graph:
     def __init__(self):
         """Initialize a graph object with an empty dictionary."""
-        self.vertList = {}
-        self.numVertices = 0
+        self.vert_list = {}
+        self.num_vertices = 0
 
     def add_vertex(self, key):
         """Add a new vertex object to the graph with the given key and return the vertex."""
         # duplicate checking
-        if key in self.vertList:
+        if key in self.vert_list:
             return
 
         # create a new vertex
         new_vertex = Vertex(key)        
         # add the new vertex to the vertex list
-        self.vertList[key] = new_vertex
+        self.vert_list[key] = new_vertex
         # increment the number of vertices
-        self.numVertices += 1
+        self.num_vertices += 1
         # return the new vertex
         return new_vertex
 
     def get_vertex(self, key):
         """Return the vertex if it exists"""
         # return the vertex if it is in the graph
-        if key in self.vertList:
-            return self.vertList[key] 
+        if key in self.vert_list:
+            return self.vert_list[key] 
         else:
             raise ValueError("{} vertex does not exist".format(key))
 
@@ -89,9 +89,9 @@ class Graph:
         """add an edge from vertex with key `key1` to vertex with key `key2` with a weight."""
         # if either vertex is not in the graph,
         # add it - or return an error (choice is up to you).
-        if key1 not in self.vertList:
+        if key1 not in self.vert_list:
             raise ValueError("{} vertex does not exist".format(key1))
-        elif key2 not in self.vertList:
+        elif key2 not in self.vert_list:
             raise ValueError("{} vertex does not exist".format(key2))
 
         # Edge case where vertex f & t are the same
@@ -101,33 +101,36 @@ class Graph:
         # if both vertices in the graph, add the
         # edge by making t a neighbor of f
         # and using the add_neighbor method of the Vertex class.
-        # Hint: the vertex f is stored in self.vertList[f].
+        # Hint: the vertex f is stored in self.vert_list[f].
         else:
-            # Adds edge to both vertList dictionary entries f & t
-            self.vertList[key1].add_neighbor(key2, weight)
-            self.vertList[key2].add_neighbor(key1, weight)
+            # Adds edge to both vert_list dictionary entries f & t
+            self.vert_list[key1].add_neighbor(key2, weight)
+            self.vert_list[key2].add_neighbor(key1, weight)
 
     def get_vertices(self):
         """return all the vertices in the graph"""
-        return self.vertList.keys()
+        return self.vert_list.keys()
 
     def get_edges(self):
         """return all the edges in the graph"""
         # TODO
         edge_dict = {}
 
-        # Night cap. I can't envision what the output looks like for my edge dict
-        # My guess is it should look something like this {vertex1 : {vertex2: weight1
-        #                                                          vertex3: weight2            
-        #                                                         }}
-        for vertex in self.vertList:
-            for neighbor in vertex.getNeighbors():
-                edge_dict.update({vertex.id: neighbor})
+        # PSEUDO BRAINSTORM
+        # Output should look something like this {vertex1 : {vertex2: weight1
+        #                                                    vertex3: weight2            
+        #                                                   }}
+        for vertex in self.vert_list:
+            print("vertex:", vertex)
+            for neighbor in vertex.get_neighbors():
+                print("neighbor", neighbor)
+                edge_dict.update({vertex.id: {neighbor: vertex.get_edge_weight(neighbor)}})
+                print("edge_dict:", edge_dict)
 
 
     def __iter__(self):
         """Iterate over the vertex objects in the graph, to use sytax: for v in g"""
-        return iter(self.vertList.values())
+        return iter(self.vert_list.values())
 
 
 # Driver code

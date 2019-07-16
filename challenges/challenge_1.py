@@ -1,14 +1,3 @@
-# Challenge 1
-# Implement the Graph ADT with an adjacency list
-# Implement code to read in a graph from a text file to create an instance of the Graph ADT and use it's methods.
-# Input: A graph file (can contain a directed or undirected graph with or without weights)
-
-# Output:
-
-# The # vertices in the graph.
-# The # edges in the graph.
-# A list of the edges with their weights (if weighted)
-
 #!python
 
 """ Vertex Class
@@ -70,29 +59,29 @@ facts and functionalities of graphs.
 class Graph:
     def __init__(self):
         """Initialize a graph object with an empty dictionary."""
-        self.vertList = {}
-        self.numVertices = 0
+        self.vert_list = {}
+        self.num_vertices = 0
 
     def add_vertex(self, key):
         """Add a new vertex object to the graph with the given key and return the vertex."""
         # duplicate checking
-        if key in self.vertList:
+        if key in self.vert_list:
             return
 
         # create a new vertex
         new_vertex = Vertex(key)        
         # add the new vertex to the vertex list
-        self.vertList[key] = new_vertex
+        self.vert_list[key] = new_vertex
         # increment the number of vertices
-        self.numVertices += 1
+        self.num_vertices += 1
         # return the new vertex
         return new_vertex
 
     def get_vertex(self, key):
         """Return the vertex if it exists"""
         # return the vertex if it is in the graph
-        if key in self.vertList:
-            return self.vertList[key] 
+        if key in self.vert_list:
+            return self.vert_list[key] 
         else:
             raise ValueError("{} vertex does not exist".format(key))
 
@@ -100,9 +89,9 @@ class Graph:
         """add an edge from vertex with key `key1` to vertex with key `key2` with a weight."""
         # if either vertex is not in the graph,
         # add it - or return an error (choice is up to you).
-        if key1 not in self.vertList:
+        if key1 not in self.vert_list:
             raise ValueError("{} vertex does not exist".format(key1))
-        elif key2 not in self.vertList:
+        elif key2 not in self.vert_list:
             raise ValueError("{} vertex does not exist".format(key2))
 
         # Edge case where vertex f & t are the same
@@ -112,34 +101,37 @@ class Graph:
         # if both vertices in the graph, add the
         # edge by making t a neighbor of f
         # and using the add_neighbor method of the Vertex class.
-        # Hint: the vertex f is stored in self.vertList[f].
+        # Hint: the vertex f is stored in self.vert_list[f].
         else:
-            # Adds edge to both vertList dictionary entries f & t
-            self.vertList[key1].add_neighbor(key2, weight)
-            self.vertList[key2].add_neighbor(key1, weight)
+            # Adds edge to both vert_list dictionary entries f & t
+            self.vert_list[key1].add_neighbor(key2, weight)
+            self.vert_list[key2].add_neighbor(key1, weight)
 
     def get_vertices(self):
         """return all the vertices in the graph"""
-        return self.vertList.keys()
+        return self.vert_list.keys()
 
     def get_edges(self):
         """return all the edges in the graph"""
         # TODO
         edge_dict = {}
 
-        # Night cap. I can't envision what the output looks like for my edge dict
-        # My guess is it should look something like this {vertex1 : {vertex2: weight1
-        #                                                          vertex3: weight2            
-        #                                                         }}
-        for vertex in self.vertList:
-            for neighbor in vertex.getNeighbors():
+        # PSEUDO BRAINSTORM
+        # Output should look something like this {vertex1 : {vertex2: weight1
+        #                                                    vertex3: weight2            
+        #                                                   }}
+        for vertex in self:
+            print("vertex:", vertex)
+            for neighbor in vertex.get_neighbors():
+                print("neighbor", neighbor)
                 edge_dict.update({vertex.id: {neighbor: vertex.get_edge_weight(neighbor)}})
-                print(edge_dict)
+                print("edge_dict:", edge_dict)
 
 
     def __iter__(self):
         """Iterate over the vertex objects in the graph, to use sytax: for v in g"""
-        return iter(self.vertList.values())
+        return iter(self.vert_list.values())
+
 
 
 # Driver code
@@ -147,27 +139,45 @@ class Graph:
 
 if __name__ == "__main__":
 
+    # Reads the file specified in the argument. graph_data.txt in example below
+    # ex: python3 challenge_1.py graph_data.txt
+    with open(sys.argv[1], 'r') as f:
+        graph_file = f.readlines()
+    print("graph_file", graph_file)
     # Challenge 1: Create the graph
 
     g = Graph()
 
-    # Add your friends
-    g.add_vertex("Friend 1")
-    g.add_vertex("Friend 2")
-    g.add_vertex("Friend 3")
+    # Create vertices from line 2 of the file
+    for vertex in graph_file[1].strip(r'\n').split(','):
+        g.add_vertex(vertex)
+    
+    # Create edges
+    for edges in graph_file[2:]:
+        # Cleans data of extra \n and parentheses
+        stripped = edges[1:-1].strip(r')\n').split(',')
+        if len(stripped) == 2:
+            g.add_edge(stripped[0], stripped[1])
+        if len(stripped) == 3:
+            g.add_edge(stripped[0], stripped[1], stripped[2])
 
-    # ...  add all 10 including you ...
 
-    # Add connections (non weighted edges for now)
-    g.add_edge("Friend 1", "Friend 2")
-    g.add_edge("Friend 2", "Friend 3")
 
-    # Challenge 1: Output the vertices & edges
-    # Print vertices
-    print("The vertices are: ", g.get_vertices(), "\n")
 
-    # Print edges
-    print("The edges are: ")
-    for v in g:
-        for w in v.get_neighbors():
-            print("( %s , %s )" % (v.getId(), w.getId()))
+
+
+    # # ...  add all 10 including you ...
+
+    # # Add connections (non weighted edges for now)
+    # g.add_edge("Friend 1", "Friend 2")
+    # g.add_edge("Friend 2", "Friend 3")
+
+    # # Challenge 1: Output the vertices & edges
+    # # Print vertices
+    # print("The vertices are: ", g.get_vertices(), "\n")
+
+    # # Print edges
+    # print("The edges are: ")
+    # for v in g:
+    #     for w in v.get_neighbors():
+    #         print("( %s , %s )" % (v.getId(), w.getId()))

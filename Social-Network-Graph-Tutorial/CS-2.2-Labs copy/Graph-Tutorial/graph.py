@@ -1,5 +1,4 @@
 #!python
-# TODO: Change to PEP8 compliant
 
 """ Vertex Class
 A helper class for the Graph class that defines vertices and vertex neighbors.
@@ -45,14 +44,10 @@ class Vertex(object):
         # return the weight of the edge from this
         # vertex to the given vertex.
         
-        return self.neighbors[vertex]
-        # return self.neighbors.values()
-
-        # TODO: Fix this + ValueError test
-        # if vertex in self.neighbors:
-        #     return self.neighbors.values()
-        # else:
-        #     raise ValueError("{} not found".format(vertex))
+        if vertex in self.neighbors:
+            return self.neighbors[vertex]
+        else:
+            raise ValueError("{} not found".format(vertex))
 
 
 """ Graph Class

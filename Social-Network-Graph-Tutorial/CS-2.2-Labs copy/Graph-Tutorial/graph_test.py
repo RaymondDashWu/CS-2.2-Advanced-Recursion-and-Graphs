@@ -52,9 +52,8 @@ class VertexTest(unittest.TestCase):
         vertex.add_neighbor("Maggie", weight = 8)
         vertex.add_neighbor("Duckie", weight = 2)
 
-        # TODO: This doesn't work ¯\_(ツ)_/¯
         # Should raise ValueError telling us "Rainbow Unicorn" is not a neighbor
-        # self.assertRaises(KeyError, vertex.get_edge_weight("Rainbow Unicorn"))        
+        self.assertRaises(ValueError, vertex.get_edge_weight, "Rainbow Unicorn")        
 
         # Should tell us Sugar has 4 neighbors
         assert len(vertex.neighbors) == 4
@@ -119,6 +118,12 @@ class GraphTest(unittest.TestCase):
         # Checking edge weights
         assert vertex_sugar.get_edge_weight("Kevin") == 4
         assert vertex_kevin.get_edge_weight("Sugar") == 4
+
+        # Should raise errors because these vertexes don't exist
+        self.assertRaises(ValueError, graph.add_edge, "Rainbow Unicorn", "Silver Salamander")
+
+        # Should raise error because you can't have two of the same vertexes connected
+        self.assertRaises(ValueError, graph.add_edge, "Sugar", "Sugar")
 
 
     def test_get_vertices(self):

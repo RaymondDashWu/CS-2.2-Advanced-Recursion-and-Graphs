@@ -29,7 +29,7 @@ class Vertex(object):
 
     def __str__(self):
         """Output the list of neighbors of this vertex."""
-        return f'{self.id} adjacent to {[x.id for x in self.neighbors]}'
+        return f'{self.id} adjacent to {[x for x in self.neighbors]}'
 
     def get_neighbors(self):
         """Return the neighbors of this vertex."""
@@ -95,18 +95,18 @@ class Graph:
         elif key2 not in self.vert_list:
             raise ValueError("{} vertex does not exist".format(key2))
 
-        # Edge case where vertex f & t are the same
+        # Edge case where vertex key1 & key2 are the same
         elif key1 == key2:
             raise ValueError("Both vertexes can not have the same name")
 
         # if both vertices in the graph, add the
-        # edge by making t a neighbor of f
+        # edge by making key2 a neighbor of key1
         # and using the add_neighbor method of the Vertex class.
-        # Hint: the vertex f is stored in self.vert_list[f].
+        # Hint: the vertex key1 is stored in self.vert_list[key1].
         else:
-            # Adds edge to both vert_list dictionary entries f & t
+            # Adds edge to both vert_list dictionary entries key1 & key2
             self.vert_list[key1].add_neighbor(key2, weight)
-            self.vert_list[key2].add_neighbor(key1, weight)
+            # self.vert_list[key2].add_neighbor(key1, weight)
 
     def get_vertices(self):
         """return all the vertices in the graph"""
@@ -132,7 +132,6 @@ class Graph:
     def __iter__(self):
         """Iterate over the vertex objects in the graph, to use sytax: for v in g"""
         return iter(self.vert_list.values())
-
 
 
 # Driver code
@@ -169,10 +168,8 @@ if __name__ == "__main__":
     print("Edge List:")
 
     for vertex in g:
-        print("vertex", vertex)
-        print("g", g)
         for w in vertex.get_neighbors():
-            print("({},{},{})".format(vertex.get_id(), w.get_id(), vertex.get_edge_weight(w)))
+            print("({},{},{})".format(vertex.get_id(), w, vertex.get_edge_weight(w)))
 
 
 

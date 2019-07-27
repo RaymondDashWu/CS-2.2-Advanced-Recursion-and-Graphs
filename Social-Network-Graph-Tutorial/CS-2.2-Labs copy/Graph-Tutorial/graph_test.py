@@ -190,5 +190,8 @@ class GraphTest(unittest.TestCase):
 
         assert graph.BFS('2', 1) == ['2', '0', '1', '9']
 
-        # Should not be able to 
-        self.assertRaises(ValueError, graph.add_edge, "Rainbow Unicorn", "Silver Salamander")
+        # Should raise ValueError because vertex doesn't exist
+        self.assertRaises(ValueError, graph.BFS, 'Rainbow Unicorn', 1)
+
+        # Should raise ValueError because traversing negative depth
+        self.assertRaises(ValueError, graph.BFS, '2', -1)

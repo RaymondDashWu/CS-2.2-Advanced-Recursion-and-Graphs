@@ -1,5 +1,7 @@
 #!python
 
+from collections import deque
+
 """ Vertex Class
 A helper class for the Graph class that defines vertices and vertex neighbors.
 """
@@ -28,7 +30,7 @@ class Vertex(object):
 
     def __str__(self):
         """Output the list of neighbors of this vertex."""
-        return f'{self.id} adjacent to {[x.id for x in self.neighbors]}'
+        return f'{self.id} adjacent to {[x for x in self.neighbors]}'
 
     def get_neighbors(self):
         """Return the neighbors of this vertex."""
@@ -94,16 +96,16 @@ class Graph:
         elif key2 not in self.vert_list:
             raise ValueError("{} vertex does not exist".format(key2))
 
-        # Edge case where vertex f & t are the same
+        # Edge case where vertex key1 & key2 are the same
         elif key1 == key2:
             raise ValueError("Both vertexes can not have the same name")
 
         # if both vertices in the graph, add the
-        # edge by making t a neighbor of f
+        # edge by making key2 a neighbor of key1
         # and using the add_neighbor method of the Vertex class.
-        # Hint: the vertex f is stored in self.vert_list[f].
+        # Hint: the vertex key1 is stored in self.vert_list[key1].
         else:
-            # Adds edge to both vert_list dictionary entries f & t
+            # Adds edge to both vert_list dictionary entries key1 & key2
             self.vert_list[key1].add_neighbor(key2, weight)
             self.vert_list[key2].add_neighbor(key1, weight)
 
@@ -111,22 +113,68 @@ class Graph:
         """return all the vertices in the graph"""
         return self.vert_list.keys()
 
-    def get_edges(self):
-        """return all the edges in the graph"""
-        # TODO
-        edge_dict = {}
+    # def get_edges(self):
+    # TODO: Optional function
+    #     """return all the edges in the graph"""
+    #     edge_dict = {}
 
-        # PSEUDO BRAINSTORM
-        # Output should look something like this {vertex1 : {vertex2: weight1
-        #                                                    vertex3: weight2            
-        #                                                   }}
-        for vertex in self.vert_list:
-            print("vertex:", vertex)
-            for neighbor in vertex.get_neighbors():
-                print("neighbor", neighbor)
-                edge_dict.update({vertex.id: {neighbor: vertex.get_edge_weight(neighbor)}})
-                print("edge_dict:", edge_dict)
+    #     # PSEUDO BRAINSTORM
+    #     # Output should look something like this {vertex1 : {vertex2: weight1
+    #     #                                                    vertex3: weight2            
+    #     #                                                   }}
 
+    #     for vertex in self:
+    #         print("vertex:", vertex)
+    #         for neighbor in vertex.get_neighbors():
+    #             print("neighbor", neighbor)
+    #             edge_dict.update({vertex.id: {neighbor: vertex.get_edge_weight(neighbor)}})
+    #             print("edge_dict:", edge_dict)
+    #     return edge_dict
+
+    def BFS(self, vertex, n):
+        # PSEUDO BRAINSTORM:
+        # Graphs don't have a direction so I could start from any arbitrary point
+        # Need to keep track of visited nodes. Append to a dict?
+        # 
+
+        # functions to use:
+        # get_neighbors
+        
+        # Make sure the input node is actually in the graph
+        if vertex not in self.vert_list:
+            raise ValueError("Input node is not in the graph")
+
+        # Should not be able to traverse negative levels
+        if n < 0:
+            raise ValueError("The number of levels being traversed is lower than 0")
+
+        # Run BFS starting from the input node and going `n` levels deep
+        queue = deque()
+        level = 0
+        visited = set()
+        
+        queue.append(self.vert_list[vertex])
+        print("self.vert_list[vertex]", self.vert_list[vertex])
+        visited.add(self.vert_list[vertex])
+
+        while len(queue) > 0 and level <= n:
+            node = queue.popleft()
+            print("node", node)
+            # visit node by appending it to queue
+            # visited.add(node)
+            # get neighbors
+            neighbors = node.get_neighbors()
+            print("neighbors", neighbors)
+            # append all neighbors to queue
+            for neighbor in neighbors:
+                if neighbor not in visited:
+                    queue.append(neighbor)
+                    visited.add(neighbor)
+            # level += 1
+            level += 1
+
+        # Return all nodes found at the `n`th level
+        return queue
 
     def __iter__(self):
         """Iterate over the vertex objects in the graph, to use sytax: for v in g"""

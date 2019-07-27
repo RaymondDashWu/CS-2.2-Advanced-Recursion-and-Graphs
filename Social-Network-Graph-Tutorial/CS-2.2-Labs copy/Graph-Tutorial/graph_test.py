@@ -142,35 +142,52 @@ class GraphTest(unittest.TestCase):
 
         assert "Rainbow Unicorn" not in graph.get_vertices()
 
-    def test_get_edges(self):
-        # TODO
-        graph = Graph()
-        graph.add_vertex("Sugar")
-        graph.add_vertex("Kevin")
-        graph.add_vertex("Chewie")
-        graph.add_vertex("Maggie")
-        graph.add_vertex("Ducky")
+    # def test_get_edges(self):
+    #     # TODO Optional test
+    #     graph = Graph()
+    #     graph.add_vertex("Sugar")
+    #     graph.add_vertex("Kevin")
+    #     graph.add_vertex("Chewie")
+    #     graph.add_vertex("Maggie")
+    #     graph.add_vertex("Ducky")
 
-        # Sugar knows everyone
-        graph.add_edge("Sugar", "Kevin", weight = 4)
-        graph.add_edge("Sugar", "Chewie", weight = 9)
-        graph.add_edge("Sugar", "Maggie", weight = 12)
-        graph.add_edge("Sugar", "Ducky", weight = 1)
+    #     # Sugar knows everyone
+    #     graph.add_edge("Sugar", "Kevin", weight = 4)
+    #     # graph.add_edge("Sugar", "Chewie", weight = 9)
+    #     # graph.add_edge("Sugar", "Maggie", weight = 12)
+    #     # graph.add_edge("Sugar", "Ducky", weight = 1)
 
-        # Kevin only knows Sugar
-        graph.add_edge("Kevin", "Sugar", weight = 4)
+    #     # # Kevin only knows Sugar
+    #     # graph.add_edge("Kevin", "Sugar", weight = 4)
 
-        # Chewie knows Sugar and Maggie
-        graph.add_edge("Chewie", "Sugar", weight = 9)
-        graph.add_edge("Chewie", "Maggie", weight = 8)
+    #     # # Chewie knows Sugar and Maggie
+    #     # graph.add_edge("Chewie", "Sugar", weight = 9)
+    #     # graph.add_edge("Chewie", "Maggie", weight = 8)
 
-        # Maggie knows Sugar, Chewie, and Ducky
-        graph.add_edge("Maggie", "Sugar", weight = 12)
-        graph.add_edge("Maggie", "Chewie", weight = 8)
-        graph.add_edge("Maggie", "Ducky", weight = 15)
+    #     # # Maggie knows Sugar, Chewie, and Ducky
+    #     # graph.add_edge("Maggie", "Sugar", weight = 12)
+    #     # graph.add_edge("Maggie", "Chewie", weight = 8)
+    #     # graph.add_edge("Maggie", "Ducky", weight = 15)
 
-        # Ducky knows Sugar and Maggie
-        graph.add_edge("Ducky", "Sugar", weight = 1)
-        graph.add_edge("Ducky", "Maggie", weight = 15)
+    #     # # Ducky knows Sugar and Maggie
+    #     # graph.add_edge("Ducky", "Sugar", weight = 1)
+    #     # graph.add_edge("Ducky", "Maggie", weight = 15)
 
-        assert ("Sugar", "Kevin", 4) in graph.get_edges()
+    #     assert {'Kevin': {'Sugar': 4}, 'Sugar': {'Kevin': 4}} in graph.get_edges()
+    
+    def test_bfs(self):
+        g = Graph()
+
+        g.add_vertex(0)
+        g.add_vertex(1)
+        g.add_vertex(2)
+        g.add_vertex(3)
+        
+        g.add_edge(0, 1) 
+        g.add_edge(0, 2) 
+        g.add_edge(1, 2) 
+        g.add_edge(2, 0) 
+        g.add_edge(2, 3) 
+
+
+        print(g.BFS(2, 2))

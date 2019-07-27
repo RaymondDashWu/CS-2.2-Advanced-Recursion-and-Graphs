@@ -132,14 +132,6 @@ class Graph:
     #     return edge_dict
 
     def BFS(self, vertex, n):
-        # PSEUDO BRAINSTORM:
-        # Graphs don't have a direction so I could start from any arbitrary point
-        # Need to keep track of visited nodes. Append to a dict?
-        # 
-
-        # functions to use:
-        # get_neighbors
-        
         # Make sure the input node is actually in the graph
         if vertex not in self.vert_list:
             raise ValueError("Input node is not in the graph")
@@ -151,30 +143,27 @@ class Graph:
         # Run BFS starting from the input node and going `n` levels deep
         queue = deque()
         level = 0
-        visited = set()
+        visited = []
         
         queue.append(self.vert_list[vertex])
-        print("self.vert_list[vertex]", self.vert_list[vertex])
-        visited.add(self.vert_list[vertex])
+        visited.append(vertex)
 
         while len(queue) > 0 and level <= n:
             node = queue.popleft()
-            print("node", node)
-            # visit node by appending it to queue
-            # visited.add(node)
-            # get neighbors
+            
+            # get neighbors to the vertex
             neighbors = node.get_neighbors()
-            print("neighbors", neighbors)
+
             # append all neighbors to queue
             for neighbor in neighbors:
                 if neighbor not in visited:
-                    queue.append(neighbor)
-                    visited.add(neighbor)
-            # level += 1
+                    # visit node by appending it to queue
+                    queue.append(self.vert_list[neighbor])
+                    visited.append(neighbor)
             level += 1
 
         # Return all nodes found at the `n`th level
-        return queue
+        return visited
 
     def __iter__(self):
         """Iterate over the vertex objects in the graph, to use sytax: for v in g"""

@@ -36,7 +36,6 @@ class VertexTest(unittest.TestCase):
         # Should tell us Sugar's neighbors are Kevin, Chewie, Maggie, Ducky
         assert vertex.get_neighbors() == {"Kevin", "Chewie", "Maggie", "Ducky"}
 
-
     def test_getId(self):
         label = "Sugar"
         vertex = Vertex(label)
@@ -176,18 +175,20 @@ class GraphTest(unittest.TestCase):
     #     assert {'Kevin': {'Sugar': 4}, 'Sugar': {'Kevin': 4}} in graph.get_edges()
     
     def test_bfs(self):
-        g = Graph()
+        graph = Graph()
 
-        g.add_vertex(0)
-        g.add_vertex(1)
-        g.add_vertex(2)
-        g.add_vertex(3)
+        graph.add_vertex('0')
+        graph.add_vertex('1')
+        graph.add_vertex('2')
+        graph.add_vertex('9')
         
-        g.add_edge(0, 1) 
-        g.add_edge(0, 2) 
-        g.add_edge(1, 2) 
-        g.add_edge(2, 0) 
-        g.add_edge(2, 3) 
+        graph.add_edge('0', '1') 
+        graph.add_edge('0', '2') 
+        graph.add_edge('1', '2') 
+        graph.add_edge('2', '0') 
+        graph.add_edge('2', '9') 
 
+        assert graph.BFS('2', 1) == ['2', '0', '1', '9']
 
-        print(g.BFS(2, 2))
+        # Should not be able to 
+        self.assertRaises(ValueError, graph.add_edge, "Rainbow Unicorn", "Silver Salamander")

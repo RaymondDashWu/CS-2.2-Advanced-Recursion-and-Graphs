@@ -195,3 +195,31 @@ class GraphTest(unittest.TestCase):
 
         # Should raise ValueError because traversing negative depth
         self.assertRaises(ValueError, graph.BFS, '2', -1)
+
+    def test_find_shortest_path(self):
+        graph = Graph()
+
+        graph.add_vertex('0')
+        graph.add_vertex('1')
+        graph.add_vertex('2')
+        graph.add_vertex('3')
+        graph.add_vertex('4')
+        graph.add_vertex('5')
+
+        graph.add_edge('0', '1', weight = 2) 
+        graph.add_edge('0', '2', weight = 6) 
+        graph.add_edge('0', '4', weight = 1)
+        graph.add_edge('1', '2', weight = 3) 
+        graph.add_edge('1', '3', weight = 9) 
+        graph.add_edge('1', '4', weight = 12)
+        graph.add_edge('2', '3', weight = 2)
+        graph.add_edge('3', '4', weight = 7)
+        graph.add_edge('4', '5', weight = 2)  
+
+        # Path should be:
+        # 2 => 0 weight 6
+        # 0 => 4 weight 1
+        # 4 => 5 weight 2
+        # Total weight 9
+        # Reference drawing of graph: https://i.imgur.com/6ZDiTHT.jpg
+        assert graph.find_shortest_path('2', '5') == ['2', '0', '4', '5']

@@ -1,6 +1,7 @@
 #!python
 
 from collections import deque
+from queue import PriorityQueue
 
 """ Vertex Class
 A helper class for the Graph class that defines vertices and vertex neighbors.
@@ -165,6 +166,55 @@ class Graph:
         # Return all nodes found at the `n`th level
         return visited
 
+    def find_shortest_path(self, from_vert, to_vert):
+        # Make sure that both nodes from_vert and to_vert are actually in the graph
+        if from_vert not in self.vert_list or to_vert not in self.vert_list:
+            raise ValueError("Input node is not in the graph")
+        queue = PriorityQueue()
+        
+        # Setting vertexes to ∞
+        for node in self.vert_list:
+            # NOTE these are graph objects whereas in my BFS function they were dict keys
+            queue.put({float('inf'), self.vert_list[node], None})
+            print("queue.get(node)", queue.get(node))
+
+        # starting vertex starts at {0, start, path}
+        queue.put({0, self.vert_list[from_vert], None})
+        
+        # Run BFS starting from from_vert
+        while queue:
+            node = queue.get()
+            print("node", node)
+            neighbors = node.get_neighbors()
+            print(neighbors)
+        # PSEUDO BRAINSTORM
+        # other vertexes start at ∞
+        # for every vertex traversed update weight with from, to vert (weight, from_vert, to_vert)
+
+
+# Figure out a way to keep track of each path you take
+        # Once you find to_vert, end the search.
+        # Since you've been tracking the paths, find the path that goes from from_vert to to_vert
+        # Return the path, in the order of nodes visited starting with from_vert and ending with to_vert
+
+
+
+        # while len(queue) > 0:
+        #     node = queue.get()
+            
+        #     # get neighbors to the vertex
+        #     neighbors = node.get_neighbors()
+
+        #     # append all neighbors to queue
+        #     for neighbor in neighbors:
+        #         if neighbor not in visited:
+        #             # visit node by appending it to queue
+        #             queue.put(self.vert_list[neighbor])
+        #             visited.append(neighbor)
+
+        # # Return all nodes found at the `n`th level
+        # return visited
+        
     def __iter__(self):
         """Iterate over the vertex objects in the graph, to use sytax: for v in g"""
         return iter(self.vert_list.values())
